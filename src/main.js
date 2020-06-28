@@ -6,10 +6,14 @@ import store from './store'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+// css优化
 import 'normalize.css/normalize.css'
-import '@/assets/css/global/index.scss' // 全局样式
-import '@/permission' // 权限控制
+// svg图标
+import '@/assets/icon/index'
+// 权限控制
+import '@/permission'
+// 全局样式
+import '@/assets/css/global/index.scss'
 
 Vue.use(ElementUI)
 

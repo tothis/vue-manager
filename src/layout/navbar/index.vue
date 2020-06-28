@@ -17,7 +17,7 @@
         <div class="right-menu">
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
-                    <img src="@/assets/image/avatar.jpg" class="user-avatar">
+                    <img :src="avatar" class="user-avatar">
                     <i class="el-icon-caret-bottom"/>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
@@ -31,7 +31,7 @@
                             页面2
                         </el-dropdown-item>
                     </router-link>
-                    <el-dropdown-item @click.native="logout" divided>
+                    <el-dropdown-item @click.native="exit" divided>
                         <span style="display:block;">登出</span>
                     </el-dropdown-item>
                 </el-dropdown-menu>
@@ -41,31 +41,33 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
     import Breadcrumb from '@/components/breadcrumb'
+    import { getInfo } from '@/api/user'
+    import { removeToken } from '@/util/auth'
 
     export default {
         components: {
             Breadcrumb
         },
         computed: {
-            ...mapGetters([
-                'sidebar',
-                'avatar'
-            ])
+            sidebar() {
+                return this.$store.state.app.sidebar
+            },
+            avatar() {
+                return getInfo().avatar
+            }
         },
         methods: {
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
-            },
-            async logout() {
-                await this.$store.dispatch('user/logout')
+            }
+            , exit() {
+                removeToken()
                 this.$router.push(`/login?redirect=${this.$route.fullPath}`)
             }
         }
     }
 </script>
-
 <style lang="scss" scoped>
     .navbar {
         height: 50px;

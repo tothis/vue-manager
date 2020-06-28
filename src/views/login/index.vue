@@ -1,12 +1,17 @@
 <template>
     <div class="login-container">
-        <el-form :model="form" :rules="rules" auto-complete="on"
-                 class="login-form" label-position="left" ref="form">
+        <el-form
+                :model="form"
+                :rules="rules"
+                auto-complete="on"
+                class="login-form"
+                label-position="left"
+                ref="form">
             <div class="title-container">
                 <h3 class="title">系统登录</h3>
             </div>
             <el-form-item prop="userName">
-                <i class="el-icon-s-custom"></i>
+                <svg-icon icon-class="user"/>
                 <el-input
                         auto-complete="on"
                         name="userName"
@@ -19,8 +24,8 @@
             </el-form-item>
 
             <el-form-item prop="password">
-                <i :class="passwordType === 'password'?'el-icon-view':'el-icon-lock'"
-                   @click="showPassword">
+                <i @click="showPassword">
+                    <svg-icon :icon-class="passwordType === 'password'?'eye':'eye-open'"/>
                 </i>
                 <el-input
                         :key="passwordType"
@@ -43,8 +48,10 @@
     </div>
 </template>
 <script>
+    import { login } from '@/api/user'
+
     export default {
-        name: 'Login',
+        name: 'login',
         data() {
             return {
                 form: {
@@ -82,14 +89,11 @@
             handleLogin() {
                 this.$refs.form.validate(valid => {
                     if (valid) {
-                        this.$store.dispatch('user/login', this.form)
-                            .then(() => {
-                                this.$router.push({ path: this.redirect || '/' })
-                            })
-                            .catch(() => {
-                            })
+                        login(this.form, () => {
+                            this.$router.push({ path: this.redirect || '/' })
+                        })
                     } else {
-                        console.log('提交失败')
+                        console.log('数据不合法')
                         return false
                     }
                 })
@@ -105,7 +109,7 @@
         height: 100%;
         background-image: url(~@/assets/image/login/background.png);
 
-        [class^=el-icon-] {
+        .svg-icon {
             color: #889aa4;
             font-size: 16px;
             position: absolute;

@@ -5,10 +5,10 @@ export default {
         }
     },
     mounted() {
-        this.fixBugIniOS()
+        this.fixBugInIos()
     },
     methods: {
-        fixBugIniOS() {
+        fixBugInIos() {
             const $subMenu = this.$refs.subMenu
             if ($subMenu) {
                 const handleMouseleave = $subMenu.handleMouseleave

@@ -1,10 +1,19 @@
 <template>
     <div v-if="!item.hidden">
         <template
-                v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+                v-if="hasOneShowingChild(item.children,item)
+                    && (!onlyOneChild.children || onlyOneChild.noShowingChildren)
+                    && !item.alwaysShow"
+        >
             <app-link :to="resolvePath(onlyOneChild.path)" v-if="onlyOneChild.meta">
-                <el-menu-item :class="{'submenu-title-noDropdown':!isNest}" :index="resolvePath(onlyOneChild.path)">
-                    <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title"/>
+                <el-menu-item
+                        :class="{'submenu-title-noDropdown':!isNest}"
+                        :index="resolvePath(onlyOneChild.path)"
+                >
+                    <item
+                            :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
+                            :title="onlyOneChild.meta.title"
+                    />
                 </el-menu-item>
             </app-link>
         </template>
@@ -30,14 +39,13 @@
     import { isExternal } from '@/util/validate'
     import Item from './item'
     import AppLink from './link'
-    import FixiOSBug from './fixiOSBug'
+    import FixIosBug from './fixIosBug'
 
     export default {
-        name: 'SidebarItem',
+        name: 'sidebarItem',
         components: { Item, AppLink },
-        mixins: [FixiOSBug],
+        mixins: [FixIosBug],
         props: {
-            // route object
             item: {
                 type: Object,
                 required: true

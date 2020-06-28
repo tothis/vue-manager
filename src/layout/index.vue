@@ -11,11 +11,13 @@
     </div>
 </template>
 <script>
-    import { AppMain, Navbar, Sidebar } from './components'
+    import Navbar from './navbar'
+    import Sidebar from './sidebar'
+    import AppMain from './main'
     import ResizeMixin from './mixin/resizeHandler'
 
     export default {
-        name: 'Layout',
+        name: 'layout',
         components: {
             Navbar,
             Sidebar,

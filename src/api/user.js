@@ -1,24 +1,37 @@
 import request from '@/util/request'
+import axios from 'axios'
+import { getToken, setToken, TOKEN_KEY } from '@/util/auth'
+import { Message } from 'element-ui'
 
-export function login(data) {
-    return request({
-        url: '/login',
-        method: 'post',
-        data
+export function login(data, call) {
+    axios.post('/login', data, {
+        headers: {
+            TOKEN_KEY: getToken()
+        }
+    }).then(result => {
+        // 登录成功
+        setToken(result.headers[TOKEN_KEY])
+        call()
+    }).catch(e => {
+        Message({
+            message: data.userName + ' 登录失败 ' + e.message,
+            type: 'error',
+            duration: 5 * 1000
+        })
     })
 }
 
-export function getInfo(token) {
-    return request({
-        url: '/user/info',
-        method: 'get',
-        params: { token }
-    })
+export function getInfo() {
+    return {
+        userName: '李磊',
+        age: 18,
+        avatar: require('@/assets/image/avatar.jpg')
+    }
 }
 
 export function logout() {
     return request({
-        url: '/vue-admin-template/user/logout',
-        method: 'post'
+        url: '/logout',
+        method: 'get'
     })
 }

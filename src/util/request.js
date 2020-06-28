@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/util/auth'
+import { getToken, TOKEN_KEY } from '@/util/auth'
 
 const request = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -11,9 +10,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
     config => {
-        if (store.getters.token) {
-            config.headers['X-Token'] = getToken()
-        }
+        config.headers[TOKEN_KEY] = getToken()
         return config
     }, error => {
         console.log(error)
@@ -25,16 +22,16 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         const data = response.data
-        if (response.status !== 200) {
+        // 请求成功
+        if (response.status === 200) {
+            return data
+        } else {
             Message({
                 message: data || 'error',
                 type: 'error',
                 duration: 5 * 1000
             })
-            return Promise.reject(new Error(data.message || 'Error'))
-        } else {
-            console.log(response.headers['authorization'], 'authorization')
-            return data
+            return Promise.reject(data)
         }
     },
     error => {

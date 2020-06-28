@@ -1,42 +1,48 @@
 import Cookies from 'js-cookie'
 
+// 侧边栏cookie name
+const SIDEBAR_STATE = 'sidebar-state'
+
 const state = {
     sidebar: {
-        opened: Cookies.get('sidebarStatus') || true,
+        opened: Cookies.get(SIDEBAR_STATE) || true,
         withoutAnimation: false
     },
     device: 'desktop'
 }
 
 const mutations = {
-    TOGGLE_SIDEBAR: state => {
+    toggleSideBar: state => {
         state.sidebar.opened = !state.sidebar.opened
         state.sidebar.withoutAnimation = false
         if (state.sidebar.opened) {
-            Cookies.set('sidebarStatus', 1)
+            Cookies.set(SIDEBAR_STATE, 1)
         } else {
-            Cookies.set('sidebarStatus', 0)
+            Cookies.set(SIDEBAR_STATE, 0)
         }
     },
-    CLOSE_SIDEBAR: (state, withoutAnimation) => {
-        Cookies.set('sidebarStatus', 0)
+    closeSideBar: (state, withoutAnimation) => {
+        Cookies.set(SIDEBAR_STATE, 0)
         state.sidebar.opened = false
         state.sidebar.withoutAnimation = withoutAnimation
     },
-    TOGGLE_DEVICE: (state, device) => {
+    setDevice: (state, device) => {
         state.device = device
     }
 }
 
 const actions = {
+    // 打开侧边栏
     toggleSideBar({ commit }) {
-        commit('TOGGLE_SIDEBAR')
+        commit('toggleSideBar')
     },
+    // 关闭侧边栏
     closeSideBar({ commit }, { withoutAnimation }) {
-        commit('CLOSE_SIDEBAR', withoutAnimation)
+        commit('closeSideBar', withoutAnimation)
     },
-    toggleDevice({ commit }, device) {
-        commit('TOGGLE_DEVICE', device)
+    // 设置设备
+    setDevice({ commit }, device) {
+        commit('setDevice', device)
     }
 }
 

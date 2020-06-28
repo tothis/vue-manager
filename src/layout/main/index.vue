@@ -6,7 +6,6 @@
         </transition>
     </section>
 </template>
-
 <script>
     export default {
         name: 'AppMain',
@@ -17,7 +16,6 @@
         }
     }
 </script>
-
 <style scoped>
     .app-main {
         min-height: calc(100vh - 50px);
@@ -30,7 +28,6 @@
         padding-top: 50px;
     }
 </style>
-
 <style lang="scss">
     .el-popup-parent--hidden {
         .fixed-header {

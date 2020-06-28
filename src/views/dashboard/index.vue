@@ -1,22 +1,18 @@
 <template>
     <div class="dashboard-container">
-        <div class="dashboard-text">name: {{ name }}</div>
+        <div class="dashboard-text">name -> {{ name }}</div>
     </div>
 </template>
-
 <script>
-    import { mapGetters } from 'vuex'
-
     export default {
-        name: 'Dashboard',
+        name: 'dashboard',
         computed: {
-            ...mapGetters([
-                'name'
-            ])
+            name() {
+                return '李磊'
+            }
         }
     }
 </script>
-
 <style lang="scss" scoped>
     .dashboard {
         &-container {
