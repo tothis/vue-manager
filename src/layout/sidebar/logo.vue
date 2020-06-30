@@ -25,7 +25,7 @@
         data() {
             return {
                 title: 'Vue Admin Template',
-                logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+                logo: require('@/assets/image/logo.png')
             }
         }
     }
@@ -59,6 +59,8 @@
                 height: 32px;
                 vertical-align: middle;
                 margin-right: 12px;
+                border: 1px solid wheat;
+                border-radius: 50%;
             }
 
             & .sidebar-title {
@@ -75,7 +77,7 @@
 
         &.collapse {
             .sidebar-logo {
-                margin-right: 0px;
+                margin-right: 0;
             }
         }
     }

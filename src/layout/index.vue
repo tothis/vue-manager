@@ -1,6 +1,10 @@
 <template>
     <div :class="classObj" class="app-wrapper">
-        <div @click="handleClickOutside" class="drawer-bg" v-if="device ==='mobile' && sidebar.opened"/>
+        <div
+                @click="handleClickOutside"
+                class="drawer-bg"
+                v-if="device ==='mobile' && sidebar.isOpen"
+        />
         <sidebar class="sidebar-container"/>
         <div class="main-container">
             <div class="fixed-header">
@@ -33,8 +37,8 @@
             },
             classObj() {
                 return {
-                    hideSidebar: !this.sidebar.opened,
-                    openSidebar: this.sidebar.opened,
+                    hideSidebar: !this.sidebar.isOpen,
+                    openSidebar: this.sidebar.isOpen,
                     withoutAnimation: this.sidebar.withoutAnimation,
                     mobile: this.device === 'mobile'
                 }
@@ -49,8 +53,8 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '~@/assets/css/global/mixin.scss';
-    @import '~@/assets/css/global/variables.scss';
+    @import '~@/assets/css/global/mixin';
+    @import '~@/assets/css/global/variable';
 
     .app-wrapper {
         @include clearfix;

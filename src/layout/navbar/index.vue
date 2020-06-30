@@ -1,8 +1,8 @@
 <template>
     <div class="navbar">
-        <div @click="toggleSideBar" class="hamburger-container" style="padding: 0 15px;">
+        <div @click="toggleSideBar" class="hamburger-container">
             <svg
-                    :class="{'is-active':sidebar.opened}"
+                    :class="{'is-open':sidebar.isOpen}"
                     class="hamburger"
                     height="64"
                     viewBox="0 0 1024 1024"
@@ -83,6 +83,7 @@
             cursor: pointer;
             transition: background .3s;
             -webkit-tap-highlight-color: transparent;
+            padding: 0 15px;
 
             &:hover {
                 background: rgba(0, 0, 0, .025)
@@ -152,7 +153,7 @@
             height: 20px;
         }
 
-        .hamburger.is-active {
+        .hamburger.is-open {
             transform: rotate(180deg);
         }
     }

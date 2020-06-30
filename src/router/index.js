@@ -259,7 +259,7 @@ const convertRouter = (route, children, prefix) => {
     }
 }
 
-const loadRouterAfter = (routerData) => {
+const loadRouterAfter = routerData => {
     // 防止addRoutes添加路由前访问路由直接跳转404
     routerData.push({ path: '*', redirect: '/404', hidden: true })
     // 添加路由

@@ -117,7 +117,9 @@ router.beforeEach((to, from, next) => {
                 // toRouter(routerData)
                 loadRouter(routerData)
                 // 防止浏览器直接输入路由页面白屏
-                next(to)
+                // next(to)
+                // replace为true 跳转时 会执行router.replace() 而非router.push()
+                next({ ...to, replace: true })
             } else {
                 next()
             }

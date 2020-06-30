@@ -6,7 +6,7 @@ const SIDEBAR_STATE = 'sidebar-state'
 
 const state = {
     sidebar: {
-        opened: Cookies.get(SIDEBAR_STATE) || true,
+        isOpen: Cookies.get(SIDEBAR_STATE) || true,
         withoutAnimation: false
     },
     device: 'desktop',
@@ -15,9 +15,9 @@ const state = {
 
 const mutations = {
     toggleSideBar: state => {
-        state.sidebar.opened = !state.sidebar.opened
+        state.sidebar.isOpen = !state.sidebar.isOpen
         state.sidebar.withoutAnimation = false
-        if (state.sidebar.opened) {
+        if (state.sidebar.isOpen) {
             Cookies.set(SIDEBAR_STATE, 1)
         } else {
             Cookies.set(SIDEBAR_STATE, 0)
@@ -25,7 +25,7 @@ const mutations = {
     },
     closeSideBar: (state, withoutAnimation) => {
         Cookies.set(SIDEBAR_STATE, 0)
-        state.sidebar.opened = false
+        state.sidebar.isOpen = false
         state.sidebar.withoutAnimation = withoutAnimation
     },
     setDevice: (state, device) => {
@@ -49,8 +49,8 @@ const actions = {
     setDevice({ commit }, device) {
         commit('setDevice', device)
     },
-    setRouter: (state, routes) => {
-        state.commit('setRouter', routes)
+    setRouter: ({ commit }, routes) => {
+        commit('setRouter', routes)
     }
 }
 

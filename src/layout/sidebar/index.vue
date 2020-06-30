@@ -25,7 +25,7 @@
 <script>
     import Logo from './logo'
     import SidebarItem from './sidebarItem'
-    import variables from '@/assets/css/global/variables.scss'
+    import variables from '@/assets/css/global/variable.scss'
 
     export default {
         components: { SidebarItem, Logo },
@@ -50,7 +50,7 @@
                 return variables
             },
             isCollapse() {
-                return !this.sidebar.opened
+                return !this.sidebar.isOpen
             }
         }
     }
