@@ -4,7 +4,7 @@ import { getToken, setToken, TOKEN_KEY } from '@/util/auth'
 import { Message } from 'element-ui'
 
 export function login(data, call) {
-    axios.post('/login', data, {
+    axios.post('/api/login', data, {
         headers: {
             TOKEN_KEY: getToken()
         }

@@ -14,6 +14,8 @@ import '@/assets/icon/index'
 import '@/permission'
 // 全局样式
 import '@/assets/css/global/index.scss'
+// 引用mock
+import './mock'
 
 Vue.use(ElementUI)
 

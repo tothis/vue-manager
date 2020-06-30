@@ -38,6 +38,18 @@ const _routes = [
             }
         ]
     }, {
+        path: '/user',
+        name: '用户',
+        component: Layout,
+        children: [
+            {
+                path: 'index',
+                name: 'user',
+                component: () => import('@/views/user'),
+                meta: { title: 'user', icon: 'user' }
+            }
+        ]
+    }, {
         path: '/nested',
         name: '路由嵌套',
         component: Layout,

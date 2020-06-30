@@ -13,7 +13,15 @@ module.exports = {
         open: true, // 是否自动弹出浏览器页面
         host: 'localhost',
         port: '8888',
-        proxy: 'http://localhost:8080'
+        proxy: {
+            'api': {
+                target: 'http://localhost:8080',
+                pathRewrite: {
+                    // 重写路径
+                    'api': ''
+                }
+            }
+        }
     } // https://cli.vuejs.org/zh/guide/webpack.html
     , chainWebpack: config => {
         // 让其他svg loader不对src/assets/icon进行操作
