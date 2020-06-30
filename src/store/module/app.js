@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import router from '@/router'
 
 // 侧边栏cookie name
 const SIDEBAR_STATE = 'sidebar-state'
@@ -8,7 +9,8 @@ const state = {
         opened: Cookies.get(SIDEBAR_STATE) || true,
         withoutAnimation: false
     },
-    device: 'desktop'
+    device: 'desktop',
+    routes: []
 }
 
 const mutations = {
@@ -28,6 +30,9 @@ const mutations = {
     },
     setDevice: (state, device) => {
         state.device = device
+    },
+    setRouter: (state, routes) => {
+        state.routes = router.options.routes.concat(routes)
     }
 }
 
@@ -43,6 +48,9 @@ const actions = {
     // 设置设备
     setDevice({ commit }, device) {
         commit('setDevice', device)
+    },
+    setRouter: (state, routes) => {
+        state.commit('setRouter', routes)
     }
 }
 

@@ -1,15 +1,15 @@
-import router from './router'
+import router, { loadRouter } from './router'
+import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/util/auth'
-
 
 NProgress.configure({ showSpinner: false })
 
 // 未登录白名单
 const whiteList = ['/login']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
     // 加载进度条开始
     NProgress.start()
 
@@ -17,22 +17,117 @@ router.beforeEach(async (to, from, next) => {
     document.title = to.name
 
     // 确定用户是否已登录
-    const hasToken = getToken()
-
-    if (hasToken) {
+    if (getToken()) {
         if (to.path === '/login') {
             // 如果已登录 请重定向到主页
             next({ path: '/' })
-            NProgress.done()
         } else {
-            next()
+            if (!store.state.app.routes.length) {
+                // 登录成功后加载用户路由
+                let routerData = [
+                    {
+                        'path': '/form',
+                        'name': '表单',
+                        'component': 'Layout',
+                        'children': [
+                            {
+                                'path': 'index',
+                                'name': 'form',
+                                'component': 'form',
+                                'meta': {
+                                    'title': 'form',
+                                    'icon': 'form'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        'path': '/nested',
+                        'name': '路由嵌套',
+                        'component': 'Layout',
+                        'redirect': '/nested/menu1',
+                        'meta': {
+                            'title': '路由嵌套',
+                            'icon': 'nested'
+                        },
+                        'children': [
+                            {
+                                'path': 'menu1',
+                                'name': 'menu1',
+                                'component': 'nested/menu1',
+                                'meta': {
+                                    'title': 'menu1'
+                                },
+                                'children': [
+                                    {
+                                        'path': 'menu1-1',
+                                        'name': 'menu1-1',
+                                        'component': 'nested/menu1/menu1-1',
+                                        'meta': {
+                                            'title': 'menu1-1'
+                                        }
+                                    },
+                                    {
+                                        'path': 'menu1-2',
+                                        'name': 'menu1-2',
+                                        'component': 'nested/menu1/menu1-2',
+                                        'meta': {
+                                            'title': 'menu1-2'
+                                        },
+                                        'children': [
+                                            {
+                                                'path': 'menu1-2-1',
+                                                'name': 'menu1-2-1',
+                                                'component': 'nested/menu1/menu1-2/menu1-2-1',
+                                                'meta': {
+                                                    'title': 'menu1-2-1'
+                                                }
+                                            },
+                                            {
+                                                'path': 'menu1-2-2',
+                                                'name': 'menu1-2-2',
+                                                'component': 'nested/menu1/menu1-2/menu1-2-2',
+                                                'meta': {
+                                                    'title': 'menu1-2-2'
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        'path': 'menu1-3',
+                                        'name': 'menu1-3',
+                                        'component': 'nested/menu1/menu1-3',
+                                        'meta': {
+                                            'title': 'menu1-3'
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'path': 'menu2',
+                                'name': 'menu2',
+                                'component': 'nested/menu2',
+                                'meta': {
+                                    'title': 'menu2'
+                                }
+                            }
+                        ]
+                    }
+                ]
+                // toRouter(routerData)
+                loadRouter(routerData)
+                // 防止浏览器直接输入路由页面白屏
+                next(to)
+            } else {
+                next()
+            }
         }
     } else {
-        if (whiteList.indexOf(to.path) !== -1) {
+        // 无token时 验证白名单
+        if (whiteList.indexOf(to.path) > -1) {
             next()
         } else {
             next(`/login?redirect=${to.path}`)
-            NProgress.done()
         }
     }
 })

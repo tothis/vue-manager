@@ -12,7 +12,12 @@
                     :unique-opened="false"
                     mode="vertical"
             >
-                <sidebar-item :base-path="route.path" :item="route" :key="route.path" v-for="route in routes"/>
+                <sidebar-item
+                        :base-path="route.path"
+                        v-for="(route, index) in routes"
+                        :item="route"
+                        :key="index"
+                />
             </el-menu>
         </el-scrollbar>
     </div>
@@ -29,7 +34,9 @@
                 return this.$store.state.app.sidebar
             },
             routes() {
-                return this.$router.options.routes
+                // computed无法监控到router路由的动态添加
+                // return this.$router.options.routes
+                return this.$store.state.app.routes
             },
             activeMenu() {
                 const route = this.$route
