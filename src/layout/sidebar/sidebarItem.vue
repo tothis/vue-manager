@@ -7,12 +7,12 @@
         >
             <app-link :to="resolvePath(onlyOneChild.path)" v-if="onlyOneChild.meta">
                 <el-menu-item
-                        :class="{'submenu-title-noDropdown':!isNest}"
+                        :class="{'submenu-title-noDropdown' : !isNest}"
                         :index="resolvePath(onlyOneChild.path)"
                 >
                     <item
-                            :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
-                            :title="onlyOneChild.meta.title"
+                            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
+                            :title="onlyOneChild.meta.label"
                     />
                 </el-menu-item>
             </app-link>
@@ -20,7 +20,7 @@
 
         <el-submenu :index="resolvePath(item.path)" popper-append-to-body ref="subMenu" v-else>
             <template slot="title">
-                <item :icon="item.meta && item.meta.icon" :title="item.meta.title" v-if="item.meta"/>
+                <item :icon="item.meta && item.meta.icon" :title="item.meta.label" v-if="item.meta"/>
             </template>
             <sidebar-item
                     :base-path="resolvePath(child.path)"

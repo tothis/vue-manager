@@ -2,25 +2,27 @@
 <template>
     <el-breadcrumb class="app-breadcrumb" separator="/">
         <transition-group name="breadcrumb">
-            <el-breadcrumb-item :key="item.path" v-for="(item,index) in levelList">
-                <span
-                        class="no-redirect"
-                        v-if="item.redirect === 'noRedirect' || index === levelList.length-1"
-                >
-                    {{ item.meta.title }}
+            <el-breadcrumb-item
+                    :key="index"
+                    v-for="(item, index) in routes"
+            >
+                <span v-if="index === routes.length - 1"
+                      class="no-redirect">
+                    {{ item.meta.label }}
                 </span>
-                <a @click.prevent="handleLink(item)" v-else>{{ item.meta.title }}</a>
+                <a v-else @click.prevent="jumpPage(item)">
+                    {{ item.meta.label }}
+                </a>
             </el-breadcrumb-item>
         </transition-group>
     </el-breadcrumb>
 </template>
 <script>
-    import pathToRegexp from 'path-to-regexp'
 
     export default {
         data() {
             return {
-                levelList: null
+                routes: null
             }
         },
         watch: {
@@ -33,40 +35,26 @@
         },
         methods: {
             getBreadcrumb() {
-                let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
-                const first = matched[0]
-
-                if (!this.isDashboard(first)) {
-                    matched = [{ path: '/dashboard', meta: { title: 'Dashboard' } }].concat(matched)
+                // 仅显示'meta.label'有值的路由
+                this.routes = this.$route.matched.filter(item => item.meta.title)
+                const first = this.routes[0]
+                // 非仪表盘页添加仪表盘路由
+                if (!first.name || first.name !== 'dashboard') {
+                    this.routes.unshift({ path: '/', name: 'index', meta: { label: '仪表盘' } })
                 }
-
-                this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
             },
-            isDashboard(route) {
-                const name = route && route.name
-                if (!name) {
-                    return false
-                }
-                return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
-            },
-            pathCompile(path) {
-                // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
-                const { params } = this.$route
-                var toPath = pathToRegexp.compile(path)
-                return toPath(params)
-            },
-            handleLink(item) {
+            // 跳转页面
+            jumpPage(item) {
                 const { redirect, path } = item
                 if (redirect) {
                     this.$router.push(redirect)
-                    return
+                } else {
+                    this.$router.push(path)
                 }
-                this.$router.push(this.pathCompile(path))
             }
         }
     }
 </script>
-
 <style lang="scss" scoped>
     .app-breadcrumb.el-breadcrumb {
         display: inline-block;

@@ -3,28 +3,32 @@ import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/util/auth'
+import { getMenu } from '@/api/menu'
 
 NProgress.configure({ showSpinner: false })
 
 // 未登录白名单
 const whiteList = ['/login']
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     // 加载进度条开始
     NProgress.start()
 
     // 设置页面标题
-    document.title = to.name
+    document.title = to.meta.title
 
     // 确定用户是否已登录
-    if (getToken()) {
+    // if (getToken()) {
+    // 假设用户已登录
+    if (!getToken()) {
         if (to.path === '/login') {
             // 如果已登录 请重定向到主页
             next({ path: '/' })
         } else {
             if (!store.state.app.routes.length) {
                 // 登录成功后加载用户路由
-                let routerData = [{ 'path': '/form', 'name': '表单', 'component': 'Layout', 'children': [{ 'path': 'index', 'name': 'form', 'component': 'form', 'meta': { 'title': 'form', 'icon': 'form' } }] }, { 'path': '/user', 'name': '用户', 'component': 'Layout', 'children': [{ 'path': 'index', 'name': 'user', 'component': 'user', 'meta': { 'title': 'user', 'icon': 'user' } }] }, { 'path': '/nested', 'name': '路由嵌套', 'component': 'Layout', 'redirect': '/nested/menu1', 'meta': { 'title': '路由嵌套', 'icon': 'nested' }, 'children': [{ 'path': 'menu1', 'name': 'menu1', 'component': 'nested/menu1', 'meta': { 'title': 'menu1' }, 'children': [{ 'path': 'menu1-1', 'name': 'menu1-1', 'component': 'nested/menu1/menu1-1', 'meta': { 'title': 'menu1-1' } }, { 'path': 'menu1-2', 'name': 'menu1-2', 'component': 'nested/menu1/menu1-2', 'meta': { 'title': 'menu1-2' }, 'children': [{ 'path': 'menu1-2-1', 'name': 'menu1-2-1', 'component': 'nested/menu1/menu1-2/menu1-2-1', 'meta': { 'title': 'menu1-2-1' } }, { 'path': 'menu1-2-2', 'name': 'menu1-2-2', 'component': 'nested/menu1/menu1-2/menu1-2-2', 'meta': { 'title': 'menu1-2-2' } }] }, { 'path': 'menu1-3', 'name': 'menu1-3', 'component': 'nested/menu1/menu1-3', 'meta': { 'title': 'menu1-3' } }] }, { 'path': 'menu2', 'name': 'menu2', 'component': 'nested/menu2', 'meta': { 'title': 'menu2' } }] }]
+                let routerData
+                await getMenu().then(result => routerData = result)
                 // toRouter(routerData)
                 loadRouter(routerData)
                 // 防止浏览器直接输入路由页面白屏

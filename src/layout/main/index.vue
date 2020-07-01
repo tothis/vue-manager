@@ -8,7 +8,7 @@
 </template>
 <script>
     export default {
-        name: 'AppMain',
+        name: 'app-main',
         computed: {
             key() {
                 return this.$route.path

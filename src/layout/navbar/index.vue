@@ -39,7 +39,6 @@
         </div>
     </div>
 </template>
-
 <script>
     import Breadcrumb from '@/components/breadcrumb'
     import { getInfo } from '@/api/user'

@@ -51,7 +51,6 @@
         }
     }
 </script>
-
 <style lang="scss" scoped>
     @import '~@/assets/css/global/mixin';
     @import '~@/assets/css/global/variable';
