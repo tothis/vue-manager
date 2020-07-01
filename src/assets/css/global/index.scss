@@ -1,8 +1,8 @@
 @import './variable';
+@import './flex';
 @import './mixin';
 @import './transition';
 @import './element-ui';
-@import './sidebar';
 
 body {
   height: 100%;
@@ -46,17 +46,6 @@ a:hover {
 
 div:focus {
   outline: none;
-}
-
-.clearfix {
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
 }
 
 .app-container {

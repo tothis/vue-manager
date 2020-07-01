@@ -1,4 +1,4 @@
-import router, { loadRouter } from './router'
+import router, { toRouter } from './router'
 import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -29,8 +29,8 @@ router.beforeEach(async (to, from, next) => {
                 // 登录成功后加载用户路由
                 let routerData
                 await getMenu().then(result => routerData = result)
-                // toRouter(routerData)
-                loadRouter(routerData)
+                toRouter(routerData)
+                // loadRouter(routerData)
                 // 防止浏览器直接输入路由页面白屏
                 // next(to)
                 // replace为true 跳转时 会执行router.replace() 而非router.push()

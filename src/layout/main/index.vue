@@ -18,8 +18,8 @@
 </script>
 <style scoped>
     .app-main {
-        min-height: calc(100vh - 50px);
         width: 100%;
+        height: calc(100% - 4px);
         position: relative;
         overflow: hidden;
     }

@@ -3,9 +3,9 @@
         <div
                 @click="handleClickOutside"
                 class="drawer-bg"
-                v-if="device ==='mobile' && sidebar.isOpen"
+                v-if="device === 'mobile' && sidebar.isOpen"
         />
-        <sidebar class="sidebar-container"/>
+        <sidebar/>
         <div class="main-container">
             <div class="fixed-header">
                 <navbar/>
@@ -56,7 +56,6 @@
     @import '~@/assets/css/global/variable';
 
     .app-wrapper {
-        @include clearfix;
         position: relative;
         height: 100%;
         width: 100%;

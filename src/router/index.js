@@ -106,12 +106,11 @@ const routes = [
         path: '/',
         redirect: '/dashboard',
         component: Layout,
-        meta: { label: '仪表盘', icon: 'dashboard' },
         children: [{
             path: 'dashboard',
             name: 'dashboard',
             component: () => import('@/views/dashboard'),
-            meta: { title: 'dashboard', label: '仪表盘' }
+            meta: { title: '主页', label: '仪表盘', icon: 'dashboard' }
         }]
     }
 ]
@@ -132,7 +131,7 @@ export const toRouter = routerData => {
             if (route.component === 'Layout') {
                 route.component = Layout
             } else {
-                route.component = import(`@/views/${route.component}`)
+                route.component = loadView(route.component)
             }
         }
         if (route.children && route.children.length) {
@@ -140,6 +139,10 @@ export const toRouter = routerData => {
         }
     })
     loadRouterAfter(routerData)
+}
+
+const loadView = view => {
+    return () => import(`@/views/${view}`)
 }
 
 // 把json转为路由组件 方式二

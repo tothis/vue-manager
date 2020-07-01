@@ -40,7 +40,7 @@
                 const first = this.routes[0]
                 // 非仪表盘页添加仪表盘路由
                 if (!first.name || first.name !== 'dashboard') {
-                    this.routes.unshift({ path: '/', name: 'index', meta: { label: '仪表盘' } })
+                    this.routes.unshift({ path: '/', meta: { label: '仪表盘' } })
                 }
             },
             // 跳转页面
