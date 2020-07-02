@@ -9,7 +9,13 @@ $menuHover: #263445;
 $subMenuBg: #1f2d3d;
 $subMenuHover: #001528;
 
+// 左侧栏展开宽度
 $sideBarWidth: 210px;
+// 左侧栏关闭宽度
+$sideBarCloseWidth: 54px;
+
+// 右侧navbar高度
+$navbarHeight: 50px;
 
 // 导出变量
 :export {
@@ -21,4 +27,6 @@ $sideBarWidth: 210px;
   subMenuBg: $subMenuBg;
   subMenuHover: $subMenuHover;
   sideBarWidth: $sideBarWidth;
+  sideBarCloseWidth: $sideBarCloseWidth;
+  navbarHeight: $navbarHeight;
 }

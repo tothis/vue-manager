@@ -1,6 +1,6 @@
 <!-- 面包屑 -->
 <template>
-    <el-breadcrumb class="app-breadcrumb" separator="/">
+    <el-breadcrumb separator="/">
         <transition-group name="breadcrumb">
             <el-breadcrumb-item
                     :key="index"
@@ -18,7 +18,6 @@
     </el-breadcrumb>
 </template>
 <script>
-
     export default {
         data() {
             return {
@@ -56,12 +55,10 @@
     }
 </script>
 <style lang="scss" scoped>
-    .app-breadcrumb.el-breadcrumb {
-        display: inline-block;
-        font-size: 14px;
+    .el-breadcrumb {
         line-height: 50px;
-        margin-left: 8px;
 
+        // 灰色链接
         .no-redirect {
             color: #97a8be;
             cursor: text;

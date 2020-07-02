@@ -47,8 +47,8 @@
         text-align: center;
 
         .left, .right {
-            height: 100%;
-            margin: 4px;
+            height: calc(100% - 8px);
+            padding: 4px;
             background-color: #f8f8f8;
         }
 

@@ -58,20 +58,13 @@
 <style lang="scss">
     @import '~@/assets/css/global/variable';
 
-    .main-container {
-        height: 100%;
-        transition: margin-left .28s;
-        margin-left: $sideBarWidth;
-        position: relative;
-    }
-
     .sidebar-container {
-        transition: width 0.28s;
-        width: $sideBarWidth !important;
-        background-color: $menuBg;
-        height: 100%;
         position: fixed;
-        font-size: 0px;
+        width: $sideBarWidth !important;
+        height: 100%;
+        transition: width .28s;
+        background-color: $menuBg;
+        font-size: 0;
         top: 0;
         bottom: 0;
         left: 0;
@@ -140,11 +133,7 @@
 
     .hideSidebar {
         .sidebar-container {
-            width: 54px !important;
-        }
-
-        .main-container {
-            margin-left: 54px;
+            width: $sideBarCloseWidth !important;
         }
 
         .submenu-title-noDropdown {
@@ -198,7 +187,7 @@
     // 移动端响应
     .mobile {
         .main-container {
-            margin-left: 0px;
+            margin-left: 0;
         }
 
         .sidebar-container {

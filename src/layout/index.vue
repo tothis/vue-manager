@@ -7,9 +7,7 @@
         />
         <sidebar/>
         <div class="main-container">
-            <div class="fixed-header">
-                <navbar/>
-            </div>
+            <navbar/>
             <app-main/>
         </div>
     </div>
@@ -52,7 +50,6 @@
     }
 </script>
 <style lang="scss" scoped>
-    @import '~@/assets/css/global/mixin';
     @import '~@/assets/css/global/variable';
 
     .app-wrapper {
@@ -60,36 +57,36 @@
         height: 100%;
         width: 100%;
 
-        &.mobile.openSidebar {
-            position: fixed;
-            top: 0;
+        .main-container {
+            position: relative;
+            height: 100%;
+            transition: margin-left .28s;
+            margin-left: $sideBarWidth;
         }
-    }
 
-    .drawer-bg {
-        background: #000;
-        opacity: 0.3;
-        width: 100%;
-        top: 0;
-        height: 100%;
-        position: absolute;
-        z-index: 999;
-    }
+        // 左侧栏关闭
+        &.hideSidebar {
+            > .main-container {
+                margin-left: #{$sideBarCloseWidth};
+            }
+        }
 
-    .fixed-header {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 9;
-        width: calc(100% - #{$sideBarWidth});
-        transition: width 0.28s;
-    }
+        // 移动端样式
+        &.mobile {
+            // 移动端左侧栏展开右侧遮罩
+            .drawer-bg {
+                background: #000;
+                opacity: 0.3;
+                width: 100%;
+                top: 0;
+                height: 100%;
+                position: absolute;
+                z-index: 1;
+            }
 
-    .hideSidebar .fixed-header {
-        width: calc(100% - 54px)
-    }
-
-    .mobile .fixed-header {
-        width: 100%;
+            .main-container {
+                margin-left: 0;
+            }
+        }
     }
 </style>
