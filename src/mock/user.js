@@ -1,7 +1,7 @@
 // http://mockjs.com/examples.html
 import Mock, { Random } from 'mockjs'
 
-Mock.mock('/user', 'get', {
+Mock.mock('/user/list', 'get', {
     'users|4': [{ // 生成四个数据
         'id|+1': 1, // id从1开始 后续递增1
         'name': '@cname', // 名字为随机中文名

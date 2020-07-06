@@ -1,20 +1,20 @@
 <template>
     <div class="sidebar-container">
-        <logo :collapse="isCollapse"/>
+        <logo :isOpen="isOpen"/>
         <el-scrollbar wrap-class="scrollbar-wrapper">
             <el-menu
                     :active-text-color="variable.menuActiveText"
                     :background-color="variable.menuBg"
-                    :collapse="isCollapse"
+                    :collapse="!isOpen"
                     :collapse-transition="false"
                     :default-active="activeMenu"
                     :text-color="variable.menuText"
                     :unique-opened="false"
                     mode="vertical"
             >
-                <sidebar-item
-                        :base-path="route.path"
+                <item
                         v-for="(route, index) in routes"
+                        :base-path="route.path"
                         :item="route"
                         :key="index"
                 />
@@ -23,16 +23,13 @@
     </div>
 </template>
 <script>
-    import Logo from './logo'
-    import SidebarItem from './sidebarItem'
     import variable from '@/assets/css/global/variable.scss'
+    import Logo from './logo'
+    import Item from './item'
 
     export default {
-        components: { SidebarItem, Logo },
+        components: { Item, Logo },
         computed: {
-            sidebar() {
-                return this.$store.state.app.sidebar
-            },
             routes() {
                 // computed无法监控到router路由的动态添加
                 // return this.$router.options.routes
@@ -49,8 +46,8 @@
             variable() {
                 return variable
             },
-            isCollapse() {
-                return !this.sidebar.isOpen
+            isOpen() {
+                return this.$store.state.app.sidebar.isOpen
             }
         }
     }
@@ -59,7 +56,7 @@
     @import '~@/assets/css/global/variable';
 
     .sidebar-container {
-        position: fixed;
+        position: absolute;
         width: $sideBarWidth !important;
         height: 100%;
         transition: width .28s;
@@ -68,7 +65,7 @@
         top: 0;
         bottom: 0;
         left: 0;
-        z-index: 1001;
+        z-index: 1;
         overflow: hidden;
 
         // 覆盖 element ui 样式
@@ -108,19 +105,11 @@
             width: 100% !important;
         }
 
-        // 菜单悬浮
-        .submenu-title-noDropdown,
-        .el-submenu__title {
-            &:hover {
-                background-color: $menuHover !important;
-            }
-        }
-
         .is-active > .el-submenu__title {
             color: $subMenuActiveText !important;
         }
 
-        & .nest-menu .el-submenu > .el-submenu__title,
+        & .child-menu .el-submenu > .el-submenu__title,
         & .el-submenu .el-menu-item {
             min-width: $sideBarWidth !important;
             background-color: $subMenuBg !important;
@@ -134,19 +123,6 @@
     .hideSidebar {
         .sidebar-container {
             width: $sideBarCloseWidth !important;
-        }
-
-        .submenu-title-noDropdown {
-            padding: 0 !important;
-            position: relative;
-
-            .el-tooltip {
-                padding: 0 !important;
-
-                .svg-icon {
-                    margin-left: 20px;
-                }
-            }
         }
 
         .el-submenu {
@@ -219,7 +195,7 @@
             }
         }
 
-        .nest-menu .el-submenu > .el-submenu__title,
+        .child-menu .el-submenu > .el-submenu__title,
         .el-menu-item {
             &:hover {
                 background-color: $menuHover !important;

@@ -1,12 +1,12 @@
 import request from '@/util/request'
 import axios from 'axios'
-import { getToken, setToken, TOKEN_KEY } from '@/util/auth'
+import { token, setToken, TOKEN_KEY } from '@/util/auth'
 import { Message } from 'element-ui'
 
 export function login(data, call) {
     axios.post('/api/login', data, {
         headers: {
-            TOKEN_KEY: getToken()
+            TOKEN_KEY: token()
         }
     }).then(result => {
         // 登录成功
@@ -32,6 +32,13 @@ export function getInfo() {
 export function logout() {
     return request({
         url: '/logout',
+        method: 'get'
+    })
+}
+
+export function list() {
+    return request({
+        url: '/user/list',
         method: 'get'
     })
 }

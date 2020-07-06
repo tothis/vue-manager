@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import { getToken, TOKEN_KEY } from '@/util/auth'
+import { token, TOKEN_KEY } from '@/util/auth'
 
 const request = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -10,7 +10,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
     config => {
-        config.headers[TOKEN_KEY] = getToken()
+        config.headers[TOKEN_KEY] = token()
         return config
     }, error => {
         console.log(error)

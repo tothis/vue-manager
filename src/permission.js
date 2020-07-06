@@ -2,8 +2,8 @@ import router, { toRouter } from './router'
 import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { getToken } from '@/util/auth'
-import { getMenu } from '@/api/menu'
+import { token } from '@/util/auth'
+import { list } from '@/api/menu'
 
 NProgress.configure({ showSpinner: false })
 
@@ -18,9 +18,9 @@ router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title
 
     // 确定用户是否已登录
-    // if (getToken()) {
+    // if (token()) {
     // 假设用户已登录
-    if (!getToken()) {
+    if (!token()) {
         if (to.path === '/login') {
             // 如果已登录 请重定向到主页
             next({ path: '/' })
@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
             if (!store.state.app.routes.length) {
                 // 登录成功后加载用户路由
                 let routerData
-                await getMenu().then(result => routerData = result)
+                await list().then(result => routerData = result)
                 toRouter(routerData)
                 // loadRouter(routerData)
                 // 防止浏览器直接输入路由页面白屏

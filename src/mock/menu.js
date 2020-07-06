@@ -1,26 +1,30 @@
 import Mock from 'mockjs'
 
-Mock.mock('/list', 'get', [
+Mock.mock('/menu/list', 'get', [
     {
+        path: '/example',
+        redirect: '/example/table',
+        component: 'Layout',
+        meta: { title: 'example', label: '示例', icon: 'example' },
+        children: [
+            {
+                path: 'table',
+                component: 'table',
+                meta: { title: 'table', label: '表格', icon: 'table' }
+            }, {
+                path: 'tree',
+                component: 'tree',
+                meta: { title: 'tree', label: '树形多选', icon: 'tree' }
+            }
+        ]
+    }, {
         path: '/form',
         component: 'Layout',
-        meta: { label: '表单', icon: 'form' },
         children: [
             {
                 path: 'index',
                 component: 'form',
-                meta: { title: 'form', label: '表单' }
-            }
-        ]
-    }, {
-        path: '/user',
-        component: 'Layout',
-        meta: { label: '用户', icon: 'user' },
-        children: [
-            {
-                path: 'index',
-                component: 'user',
-                meta: { title: 'user', label: '用户' }
+                meta: { title: 'form', label: '表单', icon: 'form' }
             }
         ]
     }, {

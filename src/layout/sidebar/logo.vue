@@ -1,24 +1,18 @@
 <template>
-    <div :class="{'collapse':collapse}" class="sidebar-logo-container">
-        <transition name="sidebarLogoFade">
-            <router-link class="sidebar-logo-link" key="collapse" to="/" v-if="collapse">
-                <img :src="logo" class="sidebar-logo" v-if="logo">
-                <h1 class="sidebar-title" v-else>{{ title }} </h1>
-            </router-link>
-            <router-link class="sidebar-logo-link" key="expand" to="/" v-else>
-                <img :src="logo" class="sidebar-logo" v-if="logo">
-                <h1 class="sidebar-title">{{ title }} </h1>
+    <div :class="{'is-close':!isOpen}" class="sidebar-logo-container">
+        <transition name="logo-transition">
+            <router-link :key="isOpen?'expand':'collapse'" to="/" class="link">
+                <img :src="logo" class="logo">
+                <h1 class="title">{{ title }} </h1>
             </router-link>
         </transition>
     </div>
 </template>
-
 <script>
     export default {
-        name: 'SidebarLogo',
+        name: 'logo',
         props: {
-            collapse: {
-                type: Boolean,
+            isOpen: {
                 required: true
             }
         },
@@ -30,14 +24,13 @@
         }
     }
 </script>
-
 <style lang="scss" scoped>
-    .sidebarLogoFade-enter-active {
+    .logo-transition-enter-active {
         transition: opacity 1.5s;
     }
 
-    .sidebarLogoFade-enter,
-    .sidebarLogoFade-leave-to {
+    .logo-transition-enter,
+    .logo-transition-leave-to {
         opacity: 0;
     }
 
@@ -50,11 +43,11 @@
         text-align: center;
         overflow: hidden;
 
-        & .sidebar-logo-link {
+        .link {
             height: 100%;
             width: 100%;
 
-            & .sidebar-logo {
+            .logo {
                 width: 32px;
                 height: 32px;
                 vertical-align: middle;
@@ -63,7 +56,7 @@
                 border-radius: 50%;
             }
 
-            & .sidebar-title {
+            .title {
                 display: inline-block;
                 margin: 0;
                 color: #fff;
@@ -75,8 +68,9 @@
             }
         }
 
-        &.collapse {
-            .sidebar-logo {
+        // 左侧栏关闭时
+        &.is-close {
+            .logo {
                 margin-right: 0;
             }
         }

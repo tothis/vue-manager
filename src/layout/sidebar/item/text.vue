@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: 'menuItem',
+        // 表示该组件为纯函数组件 会进行检查 只可用props 而不可用state
         functional: true,
         props: {
             icon: {
@@ -14,16 +14,16 @@
         },
         render(h, context) {
             const { icon, title } = context.props
-            const vnodes = []
+            const result = []
 
             if (icon) {
-                vnodes.push(<svg-icon icon-class={icon}/>)
+                result.push(<svg-icon icon-class={icon}/>)
             }
 
             if (title) {
-                vnodes.push(<span slot='title'>{title}</span>)
+                result.push(<span slot='title'>{title}</span>)
             }
-            return vnodes
+            return result
         }
     }
 </script>

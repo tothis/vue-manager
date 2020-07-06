@@ -5,45 +5,37 @@ import store from '@/store'
 
 Vue.use(VueRouter)
 
-// 需要权限控制的路由
+/*
+ * 需要权限控制的路由
+ * title 页面标题 不需要展示的路由 省略此属性
+ * label 菜单名称 不需要展示的路由 省略此属性
+ * icon 菜单图标 不需要展示图标的路由 省略此属性
+ */
 const _routes = [
     {
         path: '/example',
         redirect: '/example/table',
         component: Layout,
-        // Layout模块meta属性中不需要有title属性 面包屑以此判断是否显示
-        meta: { label: '示例', icon: 'example' },
+        meta: { title: 'example', label: '示例', icon: 'example' },
         children: [
             {
                 path: 'table',
                 component: () => import('@/views/table'),
-                meta: { title: '表格', label: 'table' }
+                meta: { title: 'table', label: '表格', icon: 'table' }
             }, {
                 path: 'tree',
                 component: () => import('@/views/tree'),
-                meta: { title: '树形多选', label: 'tree' }
+                meta: { title: 'tree', label: '树形多选', icon: 'tree' }
             }
         ]
     }, {
         path: '/form',
         component: Layout,
-        meta: { label: '表单', icon: 'form' },
         children: [
             {
                 path: 'index',
                 component: () => import('@/views/form'),
-                meta: { title: 'form', label: '表单' }
-            }
-        ]
-    }, {
-        path: '/user',
-        component: Layout,
-        meta: { label: '用户', icon: 'user' },
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/user'),
-                meta: { title: 'user', label: '用户' }
+                meta: { title: 'form', label: '表单', icon: 'form' }
             }
         ]
     }, {
@@ -99,8 +91,8 @@ const routes = [
         hidden: true
     }, {
         path: '/404',
-        meta: { title: '404 page' },
         component: () => import('@/views/404'),
+        meta: { title: '404 page' },
         hidden: true
     }, {
         path: '/',

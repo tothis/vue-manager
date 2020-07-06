@@ -1,4 +1,5 @@
 <template>
+    <!-- https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA -->
     <svg :class="svgClass" aria-hidden="true">
         <use :xlink:href="iconName"></use>
     </svg>

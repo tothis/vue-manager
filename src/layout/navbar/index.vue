@@ -71,7 +71,6 @@
     @import '~@/assets/css/global/variable';
 
     .navbar {
-        width: 100%;
         height: $navbarHeight;
         background: #fff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, .08);

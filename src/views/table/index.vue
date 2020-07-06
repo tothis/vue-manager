@@ -1,79 +1,43 @@
 <template>
-    <div class="app-container">
-        <el-table
-                :data="list"
-                border
-                element-loading-text="Loading"
-                fit
-                highlight-current-row
-                v-loading="listLoading"
-        >
-            <el-table-column align="center" label="ID" width="95">
-                <template slot-scope="scope">
-                    {{ scope.$index }}
-                </template>
-            </el-table-column>
-            <el-table-column label="Title">
-                <template slot-scope="scope">
-                    {{ scope.row.title }}
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="Author" width="110">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.author }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="Pageviews" width="110">
-                <template slot-scope="scope">
-                    {{ scope.row.pageviews }}
-                </template>
-            </el-table-column>
-            <el-table-column align="center" class-name="status-col" label="Status" width="110">
-                <template slot-scope="scope">
-                    <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="Display_time" prop="created_at" width="200">
-                <template slot-scope="scope">
-                    <i class="el-icon-time"/>
-                    <span>{{ scope.row.display_time }}</span>
-                </template>
-            </el-table-column>
-        </el-table>
-    </div>
+    <el-table
+            :data="tableData">
+        <el-table-column
+                prop="id"
+                label="id">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="姓名">
+        </el-table-column>
+        <el-table-column
+                prop="sex"
+                label="性别">
+        </el-table-column>
+        <el-table-column
+                prop="age"
+                label="年龄">
+        </el-table-column>
+        <el-table-column
+                prop="date"
+                label="日期">
+        </el-table-column>
+    </el-table>
 </template>
 
 <script>
-    import { getList } from '@/api/table'
+    import { list } from '@/api/user'
 
     export default {
-        filters: {
-            statusFilter(status) {
-                const statusMap = {
-                    published: 'success',
-                    draft: 'gray',
-                    deleted: 'danger'
-                }
-                return statusMap[status]
-            }
-        },
+        name: 'user',
         data() {
             return {
-                list: null,
-                listLoading: true
+                tableData: []
             }
         },
-        created() {
-            this.fetchData()
-        },
-        methods: {
-            fetchData() {
-                this.listLoading = true
-                getList().then(response => {
-                    this.list = response.data.items
-                    this.listLoading = false
-                })
-            }
+        mounted() {
+            list().then(result => {
+                this.tableData = result.users
+            })
         }
     }
 </script>
