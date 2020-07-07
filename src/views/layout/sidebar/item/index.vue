@@ -3,7 +3,7 @@
         <template v-if="loadNode(item)">
             <item-link :to="resolvePath(node.path)">
                 <el-menu-item :index="resolvePath(node.path)">
-                    <item-text :icon="node.meta.icon" :title="node.meta.label"/>
+                    <item-text :icon="node.meta.icon" :label="node.meta.label"/>
                 </el-menu-item>
             </item-link>
         </template>
@@ -13,9 +13,7 @@
                 :index="resolvePath(item.path)"
                 ref="subMenu"
         >
-            <template slot="title">
-                <item-text :icon="item.meta.icon" :title="item.meta.label"/>
-            </template>
+            <item-text slot="title" :icon="item.meta.icon" :label="item.meta.label"/>
             <item
                     :base-path="resolvePath(child.path)"
                     :item="child"
@@ -60,12 +58,13 @@
                     const nodes = node.children.filter(item => !item.hidden)
                     if (nodes.length === 1) {
                         this.node = nodes[0]
-                        return true
+                    } else {
+                        return false
                     }
                 } else {
                     this.node = { ...node, path: '' }
-                    return true
                 }
+                return true
             },
             resolvePath(routePath) {
                 if (isExternal(routePath)) {
