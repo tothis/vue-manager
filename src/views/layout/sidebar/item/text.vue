@@ -20,7 +20,8 @@
                 result.push(<svg-icon icon-class={icon}/>)
             }
             if (label) {
-                result.push(<span>{label}</span>)
+                // 使用title插槽
+                result.push(<span slot='title'>{label}</span>)
             }
             return result
         }

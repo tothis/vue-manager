@@ -6,27 +6,20 @@ const SIDEBAR_STATE = 'sidebar-state'
 
 const state = {
     sidebar: {
-        isOpen: Cookies.get(SIDEBAR_STATE) || true,
-        withoutAnimation: false
+        isOpen: Cookies.get(SIDEBAR_STATE) || 1
     },
     device: 'desktop',
     routes: []
 }
 
 const mutations = {
-    toggleSideBar: state => {
-        state.sidebar.isOpen = !state.sidebar.isOpen
-        state.sidebar.withoutAnimation = false
-        if (state.sidebar.isOpen) {
-            Cookies.set(SIDEBAR_STATE, 1)
-        } else {
-            Cookies.set(SIDEBAR_STATE, 0)
-        }
+    openSideBar: state => {
+        state.sidebar.isOpen = 1
+        Cookies.set(SIDEBAR_STATE, 1)
     },
-    closeSideBar: (state, withoutAnimation) => {
+    closeSideBar: state => {
         Cookies.set(SIDEBAR_STATE, 0)
-        state.sidebar.isOpen = false
-        state.sidebar.withoutAnimation = withoutAnimation
+        state.sidebar.isOpen = 0
     },
     setDevice: (state, device) => {
         state.device = device
@@ -38,12 +31,12 @@ const mutations = {
 
 const actions = {
     // 打开侧边栏
-    toggleSideBar({ commit }) {
-        commit('toggleSideBar')
+    openSideBar({ commit }) {
+        commit('openSideBar')
     },
     // 关闭侧边栏
-    closeSideBar({ commit }, { withoutAnimation }) {
-        commit('closeSideBar', withoutAnimation)
+    closeSideBar({ commit }) {
+        commit('closeSideBar')
     },
     // 设置设备
     setDevice({ commit }, device) {

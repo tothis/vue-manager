@@ -5,9 +5,9 @@ const width = 992
 
 export default {
     watch: {
-        $route(route) {
+        '$route.path': function() {
             if (this.device === 'mobile' && this.sidebar.isOpen) {
-                store.dispatch('app/closeSideBar', { withoutAnimation: false })
+                store.dispatch('app/closeSideBar')
             }
         }
     },
@@ -18,10 +18,9 @@ export default {
         window.removeEventListener('resize', this.resizeHandler)
     },
     mounted() {
-        const isMobile = this.isMobile()
-        if (isMobile) {
+        if (this.isMobile()) {
             store.dispatch('app/setDevice', 'mobile')
-            store.dispatch('app/closeSideBar', { withoutAnimation: true })
+            store.dispatch('app/closeSideBar')
         }
     },
     methods: {
@@ -34,7 +33,7 @@ export default {
                 const isMobile = this.isMobile()
                 store.dispatch('app/setDevice', isMobile ? 'mobile' : 'desktop')
                 if (isMobile) {
-                    store.dispatch('app/closeSideBar', { withoutAnimation: true })
+                    store.dispatch('app/closeSideBar')
                 }
             }
         }

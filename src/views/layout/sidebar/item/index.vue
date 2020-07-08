@@ -13,6 +13,7 @@
                 :index="resolvePath(item.path)"
                 ref="subMenu"
         >
+            <!-- 使用title插槽 -->
             <item-text slot="title" :icon="item.meta.icon" :label="item.meta.label"/>
             <item
                     :base-path="resolvePath(child.path)"
