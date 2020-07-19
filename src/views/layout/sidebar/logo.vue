@@ -3,7 +3,7 @@
         <transition name="logo-transition">
             <router-link :key="isOpen?'expand':'collapse'" to="/" class="link">
                 <img :src="logo" class="logo">
-                <h1 class="title">{{ title }} </h1>
+                <h1 class="title">{{ title }}</h1>
             </router-link>
         </transition>
     </div>

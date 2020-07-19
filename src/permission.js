@@ -1,9 +1,8 @@
-import router, { toRouter } from './router'
+import router, { loadRouter } from './router'
 import store from './store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { token } from '@/util/auth'
-import { list } from '@/api/menu'
 
 NProgress.configure({ showSpinner: false })
 
@@ -27,10 +26,8 @@ router.beforeEach(async (to, from, next) => {
         } else {
             if (!store.state.app.routes.length) {
                 // 登录成功后加载用户路由
-                let routerData
-                await list().then(result => routerData = result)
-                toRouter(routerData)
-                // loadRouter(routerData)
+                // await toRouter()
+                await loadRouter()
                 // 防止浏览器直接输入路由页面白屏
                 // next(to)
                 // replace为true 跳转时 会执行router.replace() 而非router.push()

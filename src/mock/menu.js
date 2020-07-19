@@ -1,11 +1,17 @@
 import Mock from 'mockjs'
 
+/*
+ * 需要权限控制的路由
+ * title 页面标题 侧边栏 不需要访问的路由 省略此属性
+ * label 菜单名称 导航栏 不需要展示的路由 省略此属性
+ * icon 菜单图标 侧边栏 不需要展示图标的路由 省略此属性
+ */
 Mock.mock('/menu/list', 'get', [
     {
         path: '/example',
         redirect: '/example/table',
         component: 'Layout',
-        meta: { title: 'example', label: '示例', icon: 'example' },
+        meta: { label: '示例', icon: 'example' },
         children: [
             {
                 path: 'table',
@@ -71,3 +77,5 @@ Mock.mock('/menu/list', 'get', [
         ]
     }
 ])
+
+Mock.mock('/menu/permission', 'get', ['root', 'staff'])

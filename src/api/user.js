@@ -1,6 +1,6 @@
 import request from '@/util/request'
 import axios from 'axios'
-import { token, setToken, TOKEN_KEY } from '@/util/auth'
+import { setToken, token, TOKEN_KEY } from '@/util/auth'
 import { Message } from 'element-ui'
 
 export function login(data, call) {

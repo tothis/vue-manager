@@ -6,3 +6,10 @@ export function list() {
         method: 'get'
     })
 }
+
+export function permission() {
+    return request({
+        url: '/menu/permission',
+        method: 'get'
+    })
+}

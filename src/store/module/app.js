@@ -1,31 +1,34 @@
-import Cookies from 'js-cookie'
 import router from '@/router'
 
-// 侧边栏cookie name
+// 侧边栏缓存key
 const SIDEBAR_STATE = 'sidebar-state'
 
 const state = {
     sidebar: {
-        isOpen: Cookies.get(SIDEBAR_STATE) || 1
+        isOpen: +localStorage.getItem(SIDEBAR_STATE)
     },
     device: 'desktop',
-    routes: []
+    routes: [],
+    permissions: []
 }
 
 const mutations = {
     openSideBar: state => {
         state.sidebar.isOpen = 1
-        Cookies.set(SIDEBAR_STATE, 1)
+        localStorage.setItem(SIDEBAR_STATE, '1')
     },
     closeSideBar: state => {
-        Cookies.set(SIDEBAR_STATE, 0)
         state.sidebar.isOpen = 0
+        localStorage.setItem(SIDEBAR_STATE, '0')
     },
     setDevice: (state, device) => {
         state.device = device
     },
     setRouter: (state, routes) => {
         state.routes = router.options.routes.concat(routes)
+    },
+    setPermission: (state, permissions) => {
+        state.permissions = permissions
     }
 }
 
@@ -44,6 +47,9 @@ const actions = {
     },
     setRouter: ({ commit }, routes) => {
         commit('setRouter', routes)
+    },
+    setPermission: ({ commit }, permissions) => {
+        commit('setPermission', permissions)
     }
 }
 

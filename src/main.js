@@ -12,6 +12,8 @@ import 'normalize.css/normalize.css'
 import '@/assets/icon/index'
 // 权限控制
 import '@/permission'
+// 权限控制指令
+import '@/directive/permission'
 // 全局样式
 import '@/assets/css/global/index.scss'
 // 引用mock

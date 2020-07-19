@@ -26,7 +26,10 @@
         </div>
         <div class="right">
             <p>个人信息</p>
-            <h3>name -> {{ name }}</h3>
+            <!-- 且关系 -->
+            <h3 v-permission-and="['root','staff']">name -> {{ name }}</h3>
+            <!-- 或关系 -->
+            <h3 v-permission-or="['root','xx']">name -> {{ name }}</h3>
         </div>
     </div>
 </template>
