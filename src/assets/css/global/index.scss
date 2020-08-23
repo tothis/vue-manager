@@ -15,29 +15,23 @@ body {
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-a:focus,
-a:active {
+* {
+  margin: 0;
+  padding: 0;
   outline: none;
+  box-sizing: inherit;
 }
 
 a,
 a:focus,
 a:hover {
   cursor: pointer;
+  // 继承颜色
   color: inherit;
-  text-decoration: none;
+  // 下划线
+  text-decoration: none
 }
 
-div:focus {
-  outline: none;
-}
-
-label {
-  font-weight: 700;
+ul {
+  list-style: none
 }

@@ -6,6 +6,17 @@ import { list, permission } from '@/api/menu'
 
 Vue.use(VueRouter)
 
+// 重写push方法 统一处理错误信息
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
+/*
+ * 路由树第一层的component可以省略
+ * 使用loadRouter方法加载路由 不需要后端返回component 此处需要配置component
+ * 使用toRouter方法加载路由 需要后端返回component 此处不需要配置component
+ */
 const _routes = [
     {
         path: '/example',
@@ -63,6 +74,17 @@ const _routes = [
 
 const routes = [
     {
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: '/redirect/:path*',
+                component: () => import('@/views/redirect')
+            }
+        ]
+    },
+    {
         path: '/login',
         // 路由懒加载
         component: () => import('@/views/login'),
@@ -81,7 +103,7 @@ const routes = [
             path: 'dashboard',
             name: 'dashboard',
             component: () => import('@/views/dashboard'),
-            meta: { title: '主页', label: '仪表盘', icon: 'dashboard' }
+            meta: { title: '主页', label: '仪表盘', icon: 'dashboard', affix: true }
         }]
     }
 ]
@@ -97,20 +119,18 @@ export default vueRouter
 // 把json转为路由组件 方式一 需要后端保存前端组件目录
 export const toRouter = async () => {
     await list().then(async routerData => {
-        router(routerData)
+        router(routerData, 1)
         await loadRouterAfter(routerData)
     })
 }
 
-const router = routerData => {
+const router = (routerData, isParent) => {
     routerData.filter(route => {
-        if (route.component) {
-            // Layout组件特殊处理
-            if (route.component === 'Layout') {
-                route.component = Layout
-            } else {
-                route.component = loadView(route.component)
-            }
+        // Layout组件特殊处理
+        if (isParent) {
+            route.component = Layout
+        } else {
+            route.component = loadView(route.component)
         }
         if (route.children) {
             router(route.children)
@@ -127,48 +147,37 @@ const tempKey = new Date().getTime()
 // 把json转为路由组件 方式二 根据节点path拼接定位组件 不需要后端保存组件目录
 export const loadRouter = async () => {
     await list().then(async routerData => {
-        setFullPath(routerData)
-        setFullPath(_routes)
         convertRouter(routerData, 1)
         await loadRouterAfter(routerData)
     })
 }
 
-// 路由生成全路径
-const setFullPath = (routes, prefix) => {
+const convertRouter = (routes, isParent, prefix) => {
     prefix = prefix || ''
-    routes.filter(route => {
-        route[tempKey] = prefix + route.path
-        // 存在子节点
-        if (route.children) {
-            setFullPath(route.children, prefix + route.path)
-        }
-    })
-}
-
-const convertRouter = (routes, isParent) => {
     routes.filter(route => {
         if (isParent) {
             route.component = Layout
         } else {
+            route[tempKey] = prefix + route.path
             localRouter(route)
         }
         // 存在子节点
         if (route.children) {
-            convertRouter(route.children)
+            convertRouter(route.children, 0, prefix + route.path)
         }
     })
 }
 
 // 根据拼接好的路由地址获取本地路由组件
-const localRouter = (serverRoute, routes) => {
+const localRouter = (serverRoute, routes, prefix) => {
+    prefix = prefix || ''
     ;(routes || _routes).forEach(route => {
-        if (route[tempKey] === serverRoute[tempKey]) {
+        if (serverRoute[tempKey] === prefix + route.path) {
             serverRoute.component = route.component
         }
         // 存在子节点
         else if (route.children) {
-            localRouter(serverRoute, route.children)
+            localRouter(serverRoute, route.children, prefix + route.path)
         }
     })
 }

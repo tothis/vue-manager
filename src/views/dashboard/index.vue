@@ -36,6 +36,9 @@
 <script>
     export default {
         name: 'dashboard',
+        created() {
+            console.log('加载dashboard')
+        },
         computed: {
             name() {
                 return '管理员'

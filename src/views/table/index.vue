@@ -23,12 +23,14 @@
         </el-table-column>
     </el-table>
 </template>
-
 <script>
     import { list } from '@/api/user'
 
     export default {
-        name: 'user',
+        name: 'i-table',
+        created() {
+            console.log('加载table')
+        },
         data() {
             return {
                 tableData: []

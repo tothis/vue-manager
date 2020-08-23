@@ -51,7 +51,7 @@
     import { login } from '@/api/user'
 
     export default {
-        name: 'login',
+        name: 'i-login',
         data() {
             return {
                 form: {

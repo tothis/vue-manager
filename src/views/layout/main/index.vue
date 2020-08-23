@@ -2,7 +2,9 @@
 <template>
     <section class="app-main">
         <transition mode="out-in" name="fade-transform">
-            <router-view :key="key"/>
+            <keep-alive :include="cachedView">
+                <router-view :key="key"/>
+            </keep-alive>
         </transition>
     </section>
 </template>
@@ -12,6 +14,9 @@
         computed: {
             key() {
                 return this.$route.path
+            },
+            cachedView() {
+                return this.$store.state['sidebar-label'].cachedView
             }
         }
     }

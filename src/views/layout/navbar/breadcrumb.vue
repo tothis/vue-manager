@@ -3,7 +3,7 @@
     <el-breadcrumb separator="/">
         <transition-group name="breadcrumb">
             <el-breadcrumb-item
-                    :key="index"
+                    :key="item.path"
                     v-for="(item, index) in routes"
             >
                 <span v-if="index === routes.length - 1"
@@ -25,7 +25,11 @@
             }
         },
         watch: {
-            $route() {
+            $route(route) {
+                // 如果重定向到页面 则不更新面包屑
+                if (route.path.startsWith('/redirect')) {
+                    return
+                }
                 this.getBreadcrumb()
             }
         },
@@ -34,7 +38,7 @@
         },
         methods: {
             getBreadcrumb() {
-                // 仅显示'meta.label'有值的路由
+                // 仅显示'meta.title'有值的路由
                 this.routes = this.$route.matched.filter(item => item.meta.title)
                 const first = this.routes[0]
                 // 非仪表盘页添加仪表盘路由

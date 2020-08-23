@@ -11,10 +11,9 @@
         />
     </div>
 </template>
-
 <script>
     export default {
-
+        name: 'i-tree',
         data() {
             return {
                 filterText: '',
