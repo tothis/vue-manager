@@ -45,6 +45,12 @@
                 登录
             </el-button>
         </el-form>
+
+        <vue-particles
+                moveSpeed="6"
+                particleSize="8"
+                hoverMode="repulse"
+        />
     </div>
 </template>
 <script>
@@ -102,12 +108,18 @@
     }
 </script>
 <style lang="scss">
+    #particles-js {
+        position: fixed;
+        background: radial-gradient(#03548a, #0f023f);
+        left: 0;
+        right: 0;
+    }
+
     .login-container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        background-image: url(~@/assets/image/login/background.png);
 
         .svg-icon {
             color: #889aa4;
@@ -127,8 +139,8 @@
         }
 
         .el-form-item {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, .1);
+            background: rgba(0, 0, 0, .1);
             border-radius: 5px;
             color: #454545;
         }
@@ -139,9 +151,12 @@
             border-radius: 6px;
             background: #fff;
             padding: 24px 24px 0 24px;
+            z-index: 1;
         }
 
         .title-container {
+            margin-bottom: 20px;
+
             .title {
                 font-size: 26px;
                 color: #707070;

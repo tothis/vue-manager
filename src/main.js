@@ -18,8 +18,10 @@ import '@/directive/permission'
 import '@/assets/css/global/index.scss'
 // 引用mock
 import './mock'
+import VueParticles from 'vue-particles'
 
 Vue.use(ElementUI)
+Vue.use(VueParticles)
 
 Vue.config.productionTip = false
 
