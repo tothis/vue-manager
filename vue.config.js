@@ -15,7 +15,7 @@ module.exports = {
         port: '8888',
         proxy: {
             'api': {
-                target: 'http://localhost:8080',
+                target: 'http://localhost:8081',
                 pathRewrite: {
                     // 重写路径
                     'api': ''

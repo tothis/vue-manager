@@ -25,7 +25,8 @@
     @import '~@/assets/css/global/variable';
 
     .app-main {
-        height: calc(100% - #{$navbarHeight});
+        // 2为边框宽度
+        height: calc(100% - #{$navbarUpperHeight + $navbarLowerHeight + 2});
         overflow: hidden scroll;
 
         /* 滚动条宽高 */

@@ -46,6 +46,16 @@ Mock.mock('/menu/list', 'get', [
             }
         ]
     }, {
+        path: '/dict',
+        children: [
+            {
+                name: 'i-dict',
+                path: 'index',
+                component: 'dict',
+                meta: { title: 'dict', label: '字典', icon: 'dict' }
+            }
+        ]
+    }, {
         path: '/nested',
         redirect: '/nested/menu1',
         meta: { label: '路由嵌套', icon: 'nested' },

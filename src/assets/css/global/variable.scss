@@ -14,8 +14,10 @@ $sideBarWidth: 210px;
 // 左侧栏关闭宽度
 $sideBarCloseWidth: 54px;
 
-// 右侧navbar高度
-$navbarHeight: 50px;
+// 右侧navbar上部分高度
+$navbarUpperHeight: 50px;
+// 右侧navbar下部分高度
+$navbarLowerHeight: 36px;
 
 // 导出变量
 :export {
@@ -28,5 +30,6 @@ $navbarHeight: 50px;
   subMenuHover: $subMenuHover;
   sideBarWidth: $sideBarWidth;
   sideBarCloseWidth: $sideBarCloseWidth;
-  navbarHeight: $navbarHeight;
+  navbarUpperHeight: $navbarUpperHeight;
+  navbarLowerHeight: $navbarLowerHeight;
 }

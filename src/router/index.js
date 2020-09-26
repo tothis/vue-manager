@@ -38,6 +38,14 @@ const _routes = [
             }
         ]
     }, {
+        path: '/dict',
+        children: [
+            {
+                path: 'index',
+                component: () => import('@/views/dict')
+            }
+        ]
+    }, {
         path: '/nested',
         children: [
             {
