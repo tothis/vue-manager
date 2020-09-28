@@ -20,7 +20,7 @@
                     <el-button
                             v-if="scope.row.name"
                             type="success"
-                            @click="openForm({dictTypeId: scope.row.id, parentId: 0})">
+                            @click="openForm({dictTypeId: scope.row.id})">
                         新增字典
                     </el-button>
                 </template>
@@ -99,7 +99,16 @@
         },
         methods: {
             async list() {
-                this.tableData = (await list()).data
+                let data = (await list()).data
+                // 为子节点设置dictTypeId
+                for (let dict of data) {
+                    if (dict.children) {
+                        for (let i = 0; i < dict.children.length; i++) {
+                            dict.children[i].dictTypeId = dict.id
+                        }
+                    }
+                }
+                this.tableData = data
             },
             openForm(e) {
                 this.saveData = e
