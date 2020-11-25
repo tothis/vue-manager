@@ -22,22 +22,21 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         const data = response.data
-        // 请求成功
-        if (response.status === 200) {
-            return data
-        } else {
+        // 业务错误
+        if (data.code !== 0) {
             Message({
-                message: data || 'error',
+                message: '错误 ' + JSON.stringify(data),
                 type: 'error',
                 duration: 5 * 1000
             })
             return Promise.reject(data)
         }
+        return data.data
     },
     error => {
         console.error(error)
         Message({
-            message: error.message,
+            message: '响应错误 ' + JSON.stringify(error),
             type: 'error',
             duration: 5 * 1000
         })
