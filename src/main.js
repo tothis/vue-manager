@@ -9,11 +9,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 // css优化
 import 'normalize.css/normalize.css'
 // svg图标
-import '@/assets/icon/index'
+import '@/assets/icon'
 // 权限控制
 import '@/permission'
-// 权限控制指令
-import '@/directive/permission'
+// 指令
+import '@/directive'
 // 全局样式
 import '@/assets/css/global/index.scss'
 // 引用mock

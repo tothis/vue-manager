@@ -126,10 +126,9 @@ export default vueRouter
 
 // 把json转为路由组件 方式一 需要后端保存前端组件目录
 export const toRouter = async () => {
-    await list().then(async routerData => {
-        router(routerData, 1)
-        await loadRouterAfter(routerData)
-    })
+    let routerData = await list()
+    router(routerData, 1)
+    await loadRouterAfter(routerData)
 }
 
 const router = (routerData, isParent) => {
@@ -154,10 +153,9 @@ const tempKey = new Date().getTime()
 
 // 把json转为路由组件 方式二 根据节点path拼接定位组件 不需要后端保存组件目录
 export const loadRouter = async () => {
-    await list().then(async routerData => {
-        convertRouter(routerData, 1)
-        await loadRouterAfter(routerData)
-    })
+    let routerData = await list()
+    convertRouter(routerData, 1)
+    await loadRouterAfter(routerData)
 }
 
 const convertRouter = (routes, isParent, prefix) => {

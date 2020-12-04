@@ -2,6 +2,7 @@
     <div>
         <el-button type="primary" @click="openForm({$type: true})">新增字典类型</el-button>
 
+        <!-- <el-button v-prevent-re-click="1000" @click="search">搜 素</el-button>-->
         <el-table
                 :data="tableData"
                 :row-key="e => e.id.toString() + e.name"
@@ -99,7 +100,7 @@
         },
         methods: {
             async list() {
-                let data = (await list()).data
+                let data = await list()
                 // 为子节点设置dictTypeId
                 for (let dict of data) {
                     if (dict.children) {
@@ -121,6 +122,12 @@
                     }
 
                     let e = this.saveData
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    })
                     // 保存字典类型
                     if (e.$type) {
                         await saveType({ id: e.id, name: e.name })
@@ -129,6 +136,7 @@
                     else {
                         await save({ id: e.id, dictTypeId: e.dictTypeId, label: e.label, value: e.value })
                     }
+                    loading.close()
                     this.visible = false
                     await this.list()
                 })
